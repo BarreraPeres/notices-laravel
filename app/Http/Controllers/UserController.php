@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MakeLoginRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -10,32 +11,20 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    public function login(Request $req)
+    public function login(MakeLoginRequest $req)
     {
-
-        $userValidated = Validator::Make(request()->all(), [
-            "email" => ["required", "email"],
-            "password" => ["required", "confirmed"]
-        ]);
-
-        if ($userValidated->fails()) {
-            return response()->json(["message" => $userValidated->errors()], 400);
-        }
 
         $user = User::where("email", $req->email)->first();
 
         if (!$user) {
-            return response()->json(["message" => "invalid credencials"], 400);
+            return response()->json(["message" => "user not found"], 404);
         }
 
         if (!Hash::check($req->password, $user->password)) {
             return response()->json(["message" => "invalid credencials"], 400);
         }
 
-
         $token = $user->createToken("accessToken")->plainTextToken;
-
-        //abort_unless($user, 404);
 
         return response()->json([
             "user" => $user,
