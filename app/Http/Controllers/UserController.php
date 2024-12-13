@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MakeLoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -32,23 +33,13 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function register(Request $request)
+    public function register(RegisterRequest $req)
     {
 
-        $userValidated = Validator::make($request->all(), [
-            "name" => ["string", "required"],
-            "email" => ["required", "email", "unique:users"],
-            "password" => ["required", "confirmed"]
-        ]);
-
-        if ($userValidated->fails()) {
-            return response()->json(["message" => $userValidated->errors()], 400);
-        }
-
         $user = User::create([
-            "name" =>  $request->name,
-            "email" => $request->email,
-            "password" => Hash::make($request->password)
+            "name" =>  $req->name,
+            "email" => $req->email,
+            "password" => Hash::make($req->password)
         ]);
 
         $token = $user->createToken("accessToken")->plainTextToken;
