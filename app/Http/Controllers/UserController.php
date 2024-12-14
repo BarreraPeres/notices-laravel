@@ -8,7 +8,6 @@ use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -43,10 +42,18 @@ class UserController extends Controller
         ]);
 
         $token = $user->createToken("accessToken")->plainTextToken;
-
         return response()->json([
             "user" => $user,
             "token" => $token
         ], 201);
+    }
+
+    public function get(Request $req)
+    {
+        $users = User::all();
+
+        return response()->json([
+            "users" => $users
+        ], 200);
     }
 }
