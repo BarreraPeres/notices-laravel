@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Notice;
 use App\Models\Notification;
+use App\Models\NotificationUser;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -41,6 +43,17 @@ class NoticeController extends Controller
             "alias" => $notice->title,
             "user_type" => $req->user_type,
         ]);
+
+        $users = User::all();
+
+        $notificationUser = $users->map(function (User $user) use ($notification) {
+            return [
+                "id_notification" => $notification->id,
+                "id_user" => $user->id,
+            ];
+        });
+
+        NotificationUser::insert($notificationUser->toArray());
 
         return response()->json([
             "notice" => $notice,
