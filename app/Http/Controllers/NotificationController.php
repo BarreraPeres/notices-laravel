@@ -10,15 +10,15 @@ class NotificationController extends Controller
 
     public function get(Request $req)
     {
+        $q = $req->input("q");
+        $notifications = Notification::query()->where("alias", "like", "%$q%")->get();
 
-        /** @var Notification $notification */
-        $user_type = $req->input("user_type");
-        if (!$user_type) {
-            return response()->json(Notification::query()->where("user_type", "all")->get(), 200);
-        } else {
-            return response()->json(Notification::query()->where("user_type", "=", $user_type)->get(), 200);
+        if (!$notifications) {
+            return response()->json(["message" => "recources not found"], 404);
         }
 
-        return response()->json(["message" => "recources not found"], 404);
+        return response()->json([
+            "notifications" => $notifications
+        ], 200);
     }
 }

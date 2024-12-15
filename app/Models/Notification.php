@@ -13,7 +13,7 @@ class Notification extends Model
 
     protected $filable = [
         "id_notice",
-        "user_type",
+        //        "user_type",
         "alias"
     ];
 

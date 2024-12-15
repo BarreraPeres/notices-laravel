@@ -15,12 +15,6 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignId("id_notice")->constrained("notices");
-            $table->enum("user_type", [
-                "all",
-                "students",
-                "teachers",
-                "financial"
-            ]);
             $table->string("alias");
         });
     }

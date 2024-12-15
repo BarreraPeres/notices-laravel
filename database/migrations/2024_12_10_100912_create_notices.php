@@ -15,6 +15,12 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string("title");
+            $table->enum("user_type", [
+                "all",
+                "students",
+                "teachers",
+                "financial"
+            ]);
             $table->string("procedure");
             $table->string("description");
             $table->string("brief_description");
