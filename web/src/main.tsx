@@ -3,9 +3,12 @@ import './index.css'
 import { App } from './App.tsx'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { client } from './lib/tanstack-client.ts'
+import { BrowserRouter } from 'react-router-dom'
 
 createRoot(document.getElementById('root')!).render(
-  <QueryClientProvider client={client}>
-    <App />
-  </QueryClientProvider>
+  <BrowserRouter>
+    <QueryClientProvider client={client}>
+      <App />
+    </QueryClientProvider>
+  </BrowserRouter>
 )

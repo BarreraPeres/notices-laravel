@@ -1,15 +1,15 @@
-import defaultTheme from 'tailwindcss/defaultTheme'
-
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
-      defaultTheme
+      fontFamily: {
+        "sans": ["Ginto", "ui-sans-serif", "system-ui"]
+      }
     },
   },
   plugins: [],
-};
+}
