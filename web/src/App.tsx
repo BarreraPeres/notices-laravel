@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { VerifyLoggedService } from "../http/services/verify-logged-service";
 import { setupAxiosInterceptors } from "./lib/axios-client";
 import { useEffect } from "react";
+import { Notices } from "./pages/Notices";
 
 export function App() {
   const navigate = useNavigate()
@@ -47,6 +48,7 @@ export function App() {
         <Route path="/" element={<PrivateRoute />} >
           <Route path="/home" element={<Home />}></Route>
           <Route path="/create-notice" element={<CreateNotice />}></Route>
+          <Route path="/notices" element={<Notices />}></Route>
         </Route>
       </Routes >
     </>

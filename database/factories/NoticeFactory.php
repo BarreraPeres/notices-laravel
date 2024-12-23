@@ -25,6 +25,10 @@ class NoticeFactory extends Factory
             'author' => fake()->name(),
             'generate_pop_up' => fake()->boolean(),
             'pop_up_expiration' => fake()->dateTimeBetween('now', '+30 days'),
+            'pop_up_image' => fake()->imageUrl(),
+            'notice_active' => fake()->boolean(),
+            'date_inactivation' => fake()->dateTimeBetween('-1 year', 'now'),
+            'motive_inactivation' => fake()->text(100),
             'created_at' => fake()->dateTimeBetween('-1 year'),
             'updated_at' => now(),
         ];

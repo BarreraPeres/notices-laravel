@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { RefreshTokenService } from "../../http/services/refresh-token-service"
+import { useQueryClient } from "@tanstack/react-query";
 
 export const axiosClient = axios.create({
     baseURL: "http://localhost:8000/api",
@@ -9,7 +10,9 @@ export const axiosClient = axios.create({
     withCredentials: true
 })
 
+
 export function setupAxiosInterceptors() {
+
     // Add a request interceptor
 
     axiosClient.interceptors.request.use(
@@ -40,6 +43,13 @@ export function setupAxiosInterceptors() {
 
                 return axiosClient(originalConfig)
             }
+            if (error.response?.status === 404 && error.config) {
+                const Tanstack = useQueryClient()
+                window.location.href = "http://localhost:5173/login"
+                Tanstack.invalidateQueries({ queryKey: ["verify if user logged"] })
+                return Promise.reject(error)
+            }
+
 
             return Promise.reject(error)
         })

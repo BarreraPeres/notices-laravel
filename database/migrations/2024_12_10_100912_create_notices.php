@@ -27,6 +27,10 @@ return new class extends Migration
             $table->string("author");
             $table->boolean("generate_pop_up")->default(false)->nullable();
             $table->date("pop_up_expiration")->nullable();
+            $table->string("pop_up_image")->nullable();
+            $table->boolean("notice_active")->default(true);
+            $table->date("date_inactivation")->nullable();
+            $table->string("motive_inactivation")->nullable();
         });
     }
 
