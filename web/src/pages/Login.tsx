@@ -5,10 +5,8 @@ import { z } from "zod";
 import { Button } from "@mui/material";
 import { LoginService } from "../../http/services/login-service"
 
-interface LoginProps {
-    permitted: (p: boolean) => void
-}
-export function Login({ permitted }: LoginProps) {
+
+export function Login() {
 
     const loginForm = z.object({
         email: z.string(),
@@ -28,8 +26,8 @@ export function Login({ permitted }: LoginProps) {
                 password
             })
             if (data) {
-                permitted(true)
                 localStorage.setItem("accessToken", data.token)
+                window.location.href = "/home"
             }
         } catch (e) {
             alert("Dados Inválidos")

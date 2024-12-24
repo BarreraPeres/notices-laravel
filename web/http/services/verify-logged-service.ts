@@ -1,15 +1,12 @@
 import { axiosClient } from "../../src/lib/axios-client"
 
-interface VerifyLoggedServiceResponse {
-    message: string
-}
-
-export async function VerifyLoggedService(): Promise<VerifyLoggedServiceResponse> {
+export async function VerifyLoggedService(): Promise<boolean> {
     const res = await axiosClient.get("/verify/logged", {
         withCredentials: true
     })
 
-    return {
-        message: res.data.message
-    }
+    const { data } = res
+
+    return data
+
 }

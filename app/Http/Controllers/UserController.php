@@ -26,11 +26,11 @@ class UserController extends Controller
             return response()->json(["message" => "invalid credencials"], 400);
         }
 
-        $user->tokens()->delete();
+        //$user->tokens()->delete();
 
         $tenMinutes = Carbon::now()->addMinutes(10);
         $sevenDays = Carbon::now()->addDays(7);
-        $sevenDaysForCookie = 60 * 60 * 24 * 7;
+        $sevenDaysForCookie = 60 * 24 * 7;
 
         $refreshToken = $user->createToken("refreshToken", ["refresh"], $sevenDays)->plainTextToken;
         $token = $user->createToken("accessToken", ["token"], $tenMinutes)->plainTextToken;
@@ -38,7 +38,7 @@ class UserController extends Controller
         return response()->json([
             "user" => $user,
             "token" => $token
-        ], 200)->cookie("refreshToken", $refreshToken, $sevenDaysForCookie);
+        ], 200)->cookie("refreshToken", $refreshToken, $sevenDaysForCookie, "/", null, true, true);
     }
 
     public function register(RegisterRequest $req)
@@ -77,9 +77,9 @@ class UserController extends Controller
     {
         $userLogged = $req->cookie("refreshToken");
         if (!$userLogged) {
-            return response()->json(["message" => "Unauthorized"], 401);
+            return response()->json([false], 401);
         }
-        return response()->json(["message" => "User logged"], 200);
+        return response()->json([true], 200);
     }
 
     public function refreshToken(Request $req)
@@ -99,12 +99,11 @@ class UserController extends Controller
             return response()->json(["message" => "resource not found"], 404);
         }
 
-        $user->tokens()->delete();
-
+        // $user->tokens()->delete();
 
         $tenMinutes = Carbon::now()->addMinutes(10);
         $sevenDays = Carbon::now()->addDays(7);
-        $sevenDaysForCookie = 60 * 60 * 24 * 7;
+        $sevenDaysForCookie = 60 * 24 * 7;
 
         $newRefreshToken = $user->createToken("refreshToken", ["refresh"], $sevenDays)->plainTextToken;
         $newToken = $user->createToken("accessToken", ["token"], $tenMinutes)->plainTextToken;
