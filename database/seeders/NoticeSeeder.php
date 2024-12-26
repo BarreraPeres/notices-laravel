@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Notice;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class NoticeSeeder extends Seeder
@@ -12,6 +13,12 @@ class NoticeSeeder extends Seeder
      */
     public function run(): void
     {
-        Notice::factory(10)->create();
+
+        User::all()
+            ->map(function ($user) {
+                Notice::factory()->create([
+                    "author" => $user->id
+                ]);
+            });
     }
 }

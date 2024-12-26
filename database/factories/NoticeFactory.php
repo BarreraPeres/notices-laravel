@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,7 +23,7 @@ class NoticeFactory extends Factory
             'procedure' => fake()->word(),
             'description' => fake()->text(150),
             'brief_description' => fake()->text(100),
-            'author' => fake()->name(),
+            'author' => fake()->randomNumber(),
             'generate_pop_up' => fake()->boolean(),
             'pop_up_expiration' => fake()->dateTimeBetween('now', '+30 days'),
             'pop_up_image' => fake()->imageUrl(),
