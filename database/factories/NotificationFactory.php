@@ -19,6 +19,7 @@ class NotificationFactory extends Factory
     {
         return [
             'id_notice' => Notice::factory(),
+            'title' => fake()->word(),
             'alias' => fake()->word(),
             'created_at' => fake()->dateTimeBetween('-1 year'),
             'updated_at' => now(),

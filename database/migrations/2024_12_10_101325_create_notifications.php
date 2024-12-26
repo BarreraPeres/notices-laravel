@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignId("id_notice")->constrained("notices");
+            $table->string("title");
             $table->string("alias");
         });
     }
