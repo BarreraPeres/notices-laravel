@@ -27,7 +27,7 @@ class StoreNoticesAndNotificationsRequest extends FormRequest
             "title" => ["required", "string"],
             "user_type" => ["required", "string"],
             "description" => ["required", "string"],
-            "author" => ["required", "string"],
+            //          "author" => ["required", "string"],
             "procedure" => ["required", "string"],
             "brief_description" => ["required", "string"],
             "generate_pop_up" => ["nullable", "boolean"],

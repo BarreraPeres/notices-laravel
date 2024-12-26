@@ -14,9 +14,16 @@ class NoticeController extends Controller
     public function create(StoreNoticesAndNotificationsRequest $req)
     {
 
-        $notice = Notice::query()->create(
-            $req->validated()
-        );
+        $notice = Notice::query()->create([
+            "title" => $req->title,
+            "description" => $req->description,
+            "procedure" => $req->procedure,
+            "brief_description" => $req->brief_description,
+            "generate_pop_up" => $req->generate_pop_up,
+            "pop_up_expiration" => $req->pop_up_expiration,
+            "user_type" => $req->user_type,
+            "author" => $req->user()->id
+        ]);
 
 
         $notification = Notification::create([
@@ -45,12 +52,11 @@ class NoticeController extends Controller
     {
         $q = $req->input("q");
 
-
         /** @var Notice $notice */
         $notices = Notice::query()
-            ->whereLike("title",  "%$q%", caseSensitive: false)
-            ->orWhereLike("description", "%$q%", caseSensitive: false)
-            ->orWhereLike("author", "%$q%", caseSensitive: false)
+            ->where("author", $req->user()->id)
+            ->WhereLike("title",  "%$q%", caseSensitive: false)
+            ->WhereLike("description", "%$q%", caseSensitive: false)
             ->paginate(15);
 
         if (!$notices) {
