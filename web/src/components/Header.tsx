@@ -1,17 +1,23 @@
 import { Button } from "@mui/material"
 import { Search } from "lucide-react"
 import { LogoutService } from "../../http/services/logout-service"
+import { useState } from "react";
 
 
 
 export function Header() {
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
+
     async function handleLoggout() {
         try {
+            setIsLoggingOut(true)
             localStorage.removeItem("accessToken")
             await LogoutService()//.then(res => res.message === "ok")
             window.location.href = "http://localhost:5173/login"
         } catch (e) {
             console.log(e)
+        } finally {
+            setIsLoggingOut(false)
         }
     }
 
@@ -43,7 +49,7 @@ export function Header() {
                     onClick={handleLoggout}
                     variant="contained"
                 >
-                    Sair
+                    {isLoggingOut ? "Saindo" : "Sair"}
                 </Button>
             </div>
         </header>
