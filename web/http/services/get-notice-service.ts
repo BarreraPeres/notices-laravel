@@ -8,7 +8,7 @@ export type GetNoticesServiceResponse = {
         brief_description: string,
         author: string,
         generate_pop_up: boolean,
-        pop_up_expiration: Date,
+        pop_up_expiration: string, //date has error wtf
         description: string,
         notice_active: boolean,
         date_inactive: string,
@@ -24,11 +24,9 @@ export async function GetNoticesService(): Promise<GetNoticesServiceResponse> {
         withCredentials: true,
     })
 
-    console.log("notices", res)
     const data = res.data.notices.data
 
     const { total } = res.data.notices
-    console.log("total", total)
 
     return {
         notices: data,
