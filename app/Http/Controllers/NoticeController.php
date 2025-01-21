@@ -28,6 +28,7 @@ class NoticeController extends Controller
 
         $notification = Notification::create([
             "id_notice" => $notice->id,
+            "title" => $notice->title,
             "alias" => $notice->brief_description,
         ]);
 
